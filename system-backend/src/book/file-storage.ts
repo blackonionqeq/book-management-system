@@ -13,7 +13,7 @@ export const storage = multer.diskStorage({
     cb(null, 'uploads')
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + v4() + '-' + file.originalname
+    const uniqueSuffix = Date.now() + '-' + v4()
     cb(null, uniqueSuffix)
   },
 })

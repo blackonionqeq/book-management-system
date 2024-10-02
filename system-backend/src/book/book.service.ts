@@ -10,8 +10,12 @@ export class BookService {
   @Inject(DbService)
   private dbService: DbService
 
-  async list() {
-    return (await this.dbService.read()) as Book[]
+  async list(name?: string) {
+    const books = (await this.dbService.read()) as Book[]
+    if (!name) {
+      return books
+    }
+    return books.filter((i) => i.name.includes(name))
   }
 
   async findById(id: string) {
@@ -35,11 +39,9 @@ export class BookService {
 
   async update(updateBookDto: UpdateBookDto) {
     const books = (await this.dbService.read()) as Book[]
-    const target = books.find((i) => i.name === updateBookDto.name)
+    const target = books.find((i) => i.id === updateBookDto.id)
     if (!target)
-      throw new BadRequestException(
-        '名字叫' + updateBookDto.name + '的图书不存在',
-      )
+      throw new BadRequestException('id为' + updateBookDto.id + '的图书不存在')
     Object.entries(updateBookDto).forEach(([key, val]) => {
       target[key] = val
     })

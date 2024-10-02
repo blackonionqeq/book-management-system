@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator'
 
 export class UpdateBookDto {
   @IsNotEmpty({ message: 'id 不能为空' })
-  id: number
+  id: string
 
   @IsNotEmpty({ message: '书名不能为空' })
   name: string
